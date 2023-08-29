@@ -35,6 +35,8 @@
   let preferedDarkTheme = localStorage["preferedDarkTheme"] ?? "dark";
   let preferedLightTheme = localStorage["preferedLightTheme"] ?? "light";
 
+  let clickedTheme = document.documentElement.getAttribute("data-theme");
+
   $: {
     if (theme === "auto") {
       localStorage.removeItem("theme");
@@ -64,9 +66,17 @@
     );
   };
 
+  const handleThemeClick = (e: Event) => {
+    clickedTheme = (e.currentTarget as Element).getAttribute("data-theme");
+  };
+
   const handleCurrentThemeDrop = (e: DragEvent) => {
     e.preventDefault();
     theme = e.dataTransfer?.getData("text/plain")!;
+  };
+
+  const handleCurrentThemeClick = () => {
+    theme = clickedTheme;
   };
 
   const handlePreferedDarkThemeDrop = (e: DragEvent) => {
@@ -74,9 +84,17 @@
     preferedDarkTheme = e.dataTransfer?.getData("text/plain");
   };
 
+  const handlePreferedDarkThemeClick = () => {
+    preferedDarkTheme = clickedTheme;
+  };
+
   const handlePreferedLightThemeDrop = (e: DragEvent) => {
     e.preventDefault();
     preferedLightTheme = e.dataTransfer?.getData("text/plain");
+  };
+
+  const handlePreferedLightThemeClick = () => {
+    preferedLightTheme = clickedTheme;
   };
 
   const handleClearCurrentTheme = () => {
@@ -124,6 +142,7 @@
         class="{cardClassList} cursor-default"
         on:drop={handleCurrentThemeDrop}
         on:dragover={handleThemeDragOver}
+        on:click={handleCurrentThemeClick}
         role="listitem"
       >
         <div class="card-body">
@@ -162,6 +181,7 @@
       class="{cardClassList} cursor-default"
       on:drop={handlePreferedDarkThemeDrop}
       on:dragover={handleThemeDragOver}
+      on:click={handlePreferedDarkThemeClick}
       role="listitem"
     >
       <div class="card-body">
@@ -192,6 +212,7 @@
       class="{cardClassList} cursor-default"
       on:drop={handlePreferedLightThemeDrop}
       on:dragover={handleThemeDragOver}
+      on:click={handlePreferedLightThemeClick}
       role="listitem"
     >
       <div class="card-body">
@@ -217,6 +238,7 @@
         draggable="true"
         class="{cardClassList} cursor-grab transition-[outline-width] outline outline-0 hover:outline-4"
         on:dragstart={handleThemeDrag}
+        on:click={handleThemeClick}
         role="listitem"
         aria-grabbed="false"
       >
