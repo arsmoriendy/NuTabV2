@@ -106,7 +106,7 @@
   };
 
   const cardClassList =
-    "card card-compact inline-flex select-none shadow-xl outline-accent";
+    "card card-compact inline-flex select-none shadow-xl outline-accent text-left";
 </script>
 
 <div class="p-2 bg-base-200">
@@ -137,13 +137,12 @@
         </button>
       {/if}
 
-      <div
+      <button
         data-theme={theme}
         class="{cardClassList} cursor-default"
         on:drop={handleCurrentThemeDrop}
         on:dragover={handleThemeDragOver}
         on:click={handleCurrentThemeClick}
-        role="listitem"
       >
         <div class="card-body">
           <p class="font-semibold">
@@ -163,7 +162,7 @@
             <div class="p-1 bg-base-100" />
           </div>
         </div>
-      </div>
+      </button>
     </div>
 
     <div>
@@ -176,13 +175,12 @@
 
     <div class="divider divider-horizontal" />
 
-    <div
+    <button
       data-theme={preferedDarkTheme}
       class="{cardClassList} cursor-default"
       on:drop={handlePreferedDarkThemeDrop}
       on:dragover={handleThemeDragOver}
       on:click={handlePreferedDarkThemeClick}
-      role="listitem"
     >
       <div class="card-body">
         <p class="font-semibold">
@@ -195,7 +193,7 @@
           <div class="p-1 bg-base-100" />
         </div>
       </div>
-    </div>
+    </button>
 
     <div>
       <h2 class="text-lg font-semibold">Prefered Light Theme</h2>
@@ -207,13 +205,12 @@
 
     <div class="divider divider-horizontal" />
 
-    <div
+    <button
       data-theme={preferedLightTheme}
       class="{cardClassList} cursor-default"
       on:drop={handlePreferedLightThemeDrop}
       on:dragover={handleThemeDragOver}
       on:click={handlePreferedLightThemeClick}
-      role="listitem"
     >
       <div class="card-body">
         <p class="font-semibold">
@@ -226,20 +223,19 @@
           <div class="p-1 bg-base-100" />
         </div>
       </div>
-    </div>
+    </button>
   </div>
 
   <div class="divider" />
 
   <div class="flex flex-wrap gap-2" role="list">
     {#each daisyThemes as theme}
-      <div
+      <button
         data-theme={theme}
         draggable="true"
         class="{cardClassList} cursor-grab transition-[outline-width] outline outline-0 hover:outline-4"
         on:dragstart={handleThemeDrag}
         on:click={handleThemeClick}
-        role="listitem"
         aria-grabbed="false"
       >
         <div class="card-body">
@@ -251,7 +247,7 @@
             <div class="p-1 bg-base-100" />
           </div>
         </div>
-      </div>
+      </button>
     {/each}
   </div>
 </div>
