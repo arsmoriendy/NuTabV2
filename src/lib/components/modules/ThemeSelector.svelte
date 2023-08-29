@@ -49,6 +49,14 @@
     }
   }
 
+  $: {
+    localStorage["preferedDarkTheme"] = preferedDarkTheme;
+  }
+
+  $: {
+    localStorage["preferedLightTheme"] = preferedLightTheme;
+  }
+
   const handleThemeDrag = (e: DragEvent) => {
     e.dataTransfer?.setData(
       "text/plain",
@@ -81,7 +89,7 @@
     <div>
       <h2 class="text-lg font-semibold">Current Theme</h2>
       <small class="opacity-60"
-        >Set app wide theme and override auto system theme</small
+        >App wide theme, override prefered system theme</small
       >
     </div>
 
@@ -123,6 +131,74 @@
             <div class="p-1 bg-neutral" />
             <div class="p-1 bg-base-100" />
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="text-lg font-semibold">Prefered Dark Theme</h2>
+      <small class="opacity-60"
+        >App wide theme to be picked when system theme is set to <b>dark</b></small
+      >
+    </div>
+
+    <div class="divider divider-horizontal" />
+
+    <div
+      data-theme={preferedDarkTheme}
+      class="{cardClassList} cursor-default outline"
+      on:drop={(e) => {
+        e.preventDefault();
+        preferedDarkTheme = e.dataTransfer?.getData("text/plain");
+      }}
+      on:dragover={(e) => {
+        e.preventDefault();
+      }}
+      role="listitem"
+    >
+      <div class="card-body">
+        <p class="font-semibold">
+          {preferedDarkTheme}
+        </p>
+        <div class="flex">
+          <div class="p-1 bg-secondary" />
+          <div class="p-1 bg-accent" />
+          <div class="p-1 bg-neutral" />
+          <div class="p-1 bg-base-100" />
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="text-lg font-semibold">Prefered Light Theme</h2>
+      <small class="opacity-60"
+        >App wide theme to be picked when system theme is set to <b>light</b></small
+      >
+    </div>
+
+    <div class="divider divider-horizontal" />
+
+    <div
+      data-theme={preferedLightTheme}
+      class="{cardClassList} cursor-default outline"
+      on:drop={(e) => {
+        e.preventDefault();
+        preferedLightTheme = e.dataTransfer?.getData("text/plain");
+      }}
+      on:dragover={(e) => {
+        e.preventDefault();
+      }}
+      role="listitem"
+    >
+      <div class="card-body">
+        <p class="font-semibold">
+          {preferedLightTheme}
+        </p>
+        <div class="flex">
+          <div class="p-1 bg-secondary" />
+          <div class="p-1 bg-accent" />
+          <div class="p-1 bg-neutral" />
+          <div class="p-1 bg-base-100" />
         </div>
       </div>
     </div>
