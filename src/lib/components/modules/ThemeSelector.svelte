@@ -120,7 +120,7 @@
           <p class="font-semibold">
             {#if theme === "auto"}
               <b>Auto: </b>
-              {document.documentElement.getAttribute("data-theme")}
+              {window.matchMedia("(prefers-color-scheme: dark)").matches ? preferedDarkTheme : preferedLightTheme}
             {:else}
               {theme}
             {/if}
