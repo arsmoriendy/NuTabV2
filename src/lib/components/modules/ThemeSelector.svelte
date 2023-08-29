@@ -69,8 +69,22 @@
     theme = e.dataTransfer?.getData("text/plain")!;
   };
 
+  const handlePreferedDarkThemeDrop = (e: DragEvent) => {
+    e.preventDefault();
+    preferedDarkTheme = e.dataTransfer?.getData("text/plain");
+  };
+
+  const handlePreferedLightThemeDrop = (e: DragEvent) => {
+    e.preventDefault();
+    preferedLightTheme = e.dataTransfer?.getData("text/plain");
+  };
+
   const handleClearCurrentTheme = () => {
     theme = "auto";
+  };
+
+  const handleThemeDragOver = (e: DragEvent) => {
+    e.preventDefault();
   };
 
   const cardClassList =
@@ -111,16 +125,16 @@
           ? 'outline-dashed'
           : 'outline'}"
         on:drop={handleCurrentThemeDrop}
-        on:dragover={(e) => {
-          e.preventDefault();
-        }}
+        on:dragover={handleThemeDragOver}
         role="listitem"
       >
         <div class="card-body">
           <p class="font-semibold">
             {#if theme === "auto"}
               <b>Auto: </b>
-              {window.matchMedia("(prefers-color-scheme: dark)").matches ? preferedDarkTheme : preferedLightTheme}
+              {window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? preferedDarkTheme
+                : preferedLightTheme}
             {:else}
               {theme}
             {/if}
@@ -138,7 +152,8 @@
     <div>
       <h2 class="text-lg font-semibold">Prefered Dark Theme</h2>
       <small class="opacity-60"
-        >App wide theme to be picked when system theme is set to <b>dark</b></small
+        >App wide theme to be picked when system theme is set to <b>dark</b
+        ></small
       >
     </div>
 
@@ -147,13 +162,8 @@
     <div
       data-theme={preferedDarkTheme}
       class="{cardClassList} cursor-default outline"
-      on:drop={(e) => {
-        e.preventDefault();
-        preferedDarkTheme = e.dataTransfer?.getData("text/plain");
-      }}
-      on:dragover={(e) => {
-        e.preventDefault();
-      }}
+      on:drop={handlePreferedDarkThemeDrop}
+      on:dragover={handleThemeDragOver}
       role="listitem"
     >
       <div class="card-body">
@@ -172,7 +182,8 @@
     <div>
       <h2 class="text-lg font-semibold">Prefered Light Theme</h2>
       <small class="opacity-60"
-        >App wide theme to be picked when system theme is set to <b>light</b></small
+        >App wide theme to be picked when system theme is set to <b>light</b
+        ></small
       >
     </div>
 
@@ -181,13 +192,8 @@
     <div
       data-theme={preferedLightTheme}
       class="{cardClassList} cursor-default outline"
-      on:drop={(e) => {
-        e.preventDefault();
-        preferedLightTheme = e.dataTransfer?.getData("text/plain");
-      }}
-      on:dragover={(e) => {
-        e.preventDefault();
-      }}
+      on:drop={handlePreferedLightThemeDrop}
+      on:dragover={handleThemeDragOver}
       role="listitem"
     >
       <div class="card-body">
