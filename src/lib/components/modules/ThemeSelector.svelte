@@ -215,7 +215,7 @@
       <div
         data-theme={theme}
         draggable="true"
-        class="{cardClassList} cursor-grab hover:outline"
+        class="{cardClassList} cursor-grab transition-[outline-width] outline outline-0 hover:outline-4"
         on:dragstart={handleThemeDrag}
         role="listitem"
         aria-grabbed="false"
