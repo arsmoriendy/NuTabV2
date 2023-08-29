@@ -127,7 +127,7 @@
 
     <div class="divider divider-horizontal" />
 
-    <div class="indicator group">
+    <div class="indicator group w-full">
       {#if theme !== "auto"}
         <button
           class="indicator-item badge badge-error transition-[transform] scale-0 group-hover:scale-100 cursor-pointer"
@@ -139,7 +139,7 @@
 
       <button
         data-theme={theme}
-        class="{cardClassList} cursor-default"
+        class="{cardClassList} cursor-default grow"
         on:drop={handleCurrentThemeDrop}
         on:dragover={handleThemeDragOver}
         on:click={handleCurrentThemeClick}
