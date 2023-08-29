@@ -121,9 +121,7 @@
 
       <div
         data-theme={theme}
-        class="{cardClassList} cursor-default {theme === 'auto'
-          ? 'outline-dashed'
-          : 'outline'}"
+        class="{cardClassList} cursor-default"
         on:drop={handleCurrentThemeDrop}
         on:dragover={handleThemeDragOver}
         role="listitem"
@@ -161,7 +159,7 @@
 
     <div
       data-theme={preferedDarkTheme}
-      class="{cardClassList} cursor-default outline"
+      class="{cardClassList} cursor-default"
       on:drop={handlePreferedDarkThemeDrop}
       on:dragover={handleThemeDragOver}
       role="listitem"
@@ -191,7 +189,7 @@
 
     <div
       data-theme={preferedLightTheme}
-      class="{cardClassList} cursor-default outline"
+      class="{cardClassList} cursor-default"
       on:drop={handlePreferedLightThemeDrop}
       on:dragover={handleThemeDragOver}
       role="listitem"
