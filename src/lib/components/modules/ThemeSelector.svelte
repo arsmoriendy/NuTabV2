@@ -106,7 +106,7 @@
   };
 
   const cardClassList =
-    "card card-compact inline-flex select-none shadow-xl outline-accent text-left";
+    "card card-compact inline-flex select-none shadow-xl !outline-accent !outline-offset-0 text-left";
 </script>
 
 <div class="p-2 bg-base-200">
@@ -139,7 +139,7 @@
 
       <button
         data-theme={theme}
-        class="{cardClassList} cursor-default grow"
+        class="{cardClassList} cursor-default grow !outline-0"
         on:drop={handleCurrentThemeDrop}
         on:dragover={handleThemeDragOver}
         on:click={handleCurrentThemeClick}
@@ -177,7 +177,7 @@
 
     <button
       data-theme={preferedDarkTheme}
-      class="{cardClassList} cursor-default"
+      class="{cardClassList} cursor-default !outline-0"
       on:drop={handlePreferedDarkThemeDrop}
       on:dragover={handleThemeDragOver}
       on:click={handlePreferedDarkThemeClick}
@@ -207,7 +207,7 @@
 
     <button
       data-theme={preferedLightTheme}
-      class="{cardClassList} cursor-default"
+      class="{cardClassList} cursor-default !outline-0"
       on:drop={handlePreferedLightThemeDrop}
       on:dragover={handleThemeDragOver}
       on:click={handlePreferedLightThemeClick}
@@ -233,7 +233,7 @@
       <button
         data-theme={theme}
         draggable="true"
-        class="{cardClassList} cursor-grab transition-[outline-width] outline outline-0 hover:outline-4"
+        class="{cardClassList} cursor-grab transition-[outline-width] !outline outline-0 focus:outline-4"
         on:dragstart={handleThemeDrag}
         on:click={handleThemeClick}
         aria-grabbed="false"
