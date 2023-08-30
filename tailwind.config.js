@@ -9,6 +9,7 @@ export default {
   },
   plugins: [
     require("daisyui"),
+    require("@tailwindcss/container-queries"),
   ],
   daisyui: {
     themes: true,

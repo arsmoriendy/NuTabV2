@@ -112,7 +112,7 @@
     "card card-compact inline-flex select-none shadow-xl !outline-accent !outline-offset-0 text-left";
 </script>
 
-<div class="p-2 bg-base-200">
+<div class="p-2 bg-base-200 @container">
   <header class="p-2">
     <h1 class="text-2xl font-semibold">Theme Selector</h1>
     <small class="opacity-60">Drag and drop to select themes</small>
@@ -120,7 +120,7 @@
 
   <div class="divider" />
 
-  <div class="grid grid-cols-[repeat(3,_max-content)] gap-2 p-2 items-center">
+  <div class="grid @xl:grid-cols-[repeat(3,max-content)] gap-2 p-2 items-center">
     <div>
       <h2 class="text-lg font-semibold">Current Theme</h2>
       <small class="opacity-60"
