@@ -108,20 +108,30 @@
     e.preventDefault();
   };
 
+  let closeInfo: Element;
+
+  const handleCloseInfo = () => {
+    closeInfo.remove();
+    localStorage["hideTutorial-ThemeSelector"] = "true";
+  };
+
   const cardClassList =
     "card card-compact inline-flex select-none shadow-xl !outline-accent !outline-offset-0 text-left";
 </script>
 
 <div class="p-2 bg-base-200 @container">
-  <header class="p-2">
-    <h1 class="text-2xl font-semibold">Theme Selector</h1>
-    <small class="opacity-60"
-      ><b>Drag or click</b> on <i>theme cards</i> and <b>drop or click</b> on <i>theme categories</i>
-      to set app wide theme</small
-    >
-  </header>
+  <header class="p-2 mb-2 text-3xl font-bold">Theme Selector</header>
 
-  <div class="divider" />
+  {#if localStorage["hideTutorial-ThemeSelector"] !== "true"}
+    <div class="alert alert-info shadow-xl" bind:this={closeInfo}>
+      <i class="fa-solid fa-circle-info" />
+      <div>
+        <b>Drag or click</b> on <i>theme cards</i> and <b>drop or click</b> on
+        <i>theme categories</i> to set app wide theme
+      </div>
+      <button class="fa-solid fa-xmark" on:click={handleCloseInfo} />
+    </div>
+  {/if}
 
   <div
     class="grid @xl:grid-cols-[repeat(3,max-content)] gap-2 p-2 items-center"
