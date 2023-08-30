@@ -115,16 +115,21 @@
 <div class="p-2 bg-base-200 @container">
   <header class="p-2">
     <h1 class="text-2xl font-semibold">Theme Selector</h1>
-    <small class="opacity-60">Drag and drop to select themes</small>
+    <small class="opacity-60"
+      ><b>Drag or click</b> on <i>theme cards</i> and <b>drop or click</b> on <i>theme categories</i>
+      to set app wide theme</small
+    >
   </header>
 
   <div class="divider" />
 
-  <div class="grid @xl:grid-cols-[repeat(3,max-content)] gap-2 p-2 items-center">
+  <div
+    class="grid @xl:grid-cols-[repeat(3,max-content)] gap-2 p-2 items-center"
+  >
     <div>
       <h2 class="text-lg font-semibold">Current Theme</h2>
       <small class="opacity-60"
-        >App wide theme, override prefered system theme</small
+        >App wide theme, override <b>auto system theme</b>.</small
       >
     </div>
 
