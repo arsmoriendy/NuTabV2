@@ -35,7 +35,7 @@
   let preferedDarkTheme = localStorage["preferedDarkTheme"] ?? "dark";
   let preferedLightTheme = localStorage["preferedLightTheme"] ?? "light";
 
-  let clickedTheme = document.documentElement.getAttribute("data-theme");
+  let clickedTheme: string | null;
 
   $: {
     if (theme === "auto") {
@@ -76,7 +76,8 @@
   };
 
   const handleCurrentThemeClick = () => {
-    theme = clickedTheme;
+    theme = clickedTheme ?? theme;
+    clickedTheme = null;
   };
 
   const handlePreferedDarkThemeDrop = (e: DragEvent) => {
@@ -85,7 +86,8 @@
   };
 
   const handlePreferedDarkThemeClick = () => {
-    preferedDarkTheme = clickedTheme;
+    preferedDarkTheme = clickedTheme ?? preferedDarkTheme;
+    clickedTheme = null;
   };
 
   const handlePreferedLightThemeDrop = (e: DragEvent) => {
@@ -94,7 +96,8 @@
   };
 
   const handlePreferedLightThemeClick = () => {
-    preferedLightTheme = clickedTheme;
+    preferedLightTheme = clickedTheme ?? preferedLightTheme;
+    clickedTheme = null;
   };
 
   const handleClearCurrentTheme = () => {
