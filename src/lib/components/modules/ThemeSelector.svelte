@@ -119,11 +119,11 @@
     "card card-compact inline-flex select-none shadow-xl !outline-accent !outline-offset-0 text-left";
 </script>
 
-<div class="p-2 bg-base-200 @container">
-  <header class="p-2 mb-2 text-3xl font-bold">Theme Selector</header>
+<div class="p-4 bg-base-200 @container">
+  <header class="mb-8 text-3xl font-bold">Theme Selector</header>
 
   {#if localStorage["hideTutorial-ThemeSelector"] !== "true"}
-    <div class="alert alert-info shadow-xl" bind:this={closeInfo}>
+    <div class="alert alert-info shadow-xl mb-4" bind:this={closeInfo}>
       <i class="fa-solid fa-circle-info" />
       <div>
         <b>Drag or click</b> on <i>theme cards</i> and <b>drop or click</b> on
@@ -134,10 +134,10 @@
   {/if}
 
   <div
-    class="grid @xl:grid-cols-[repeat(3,max-content)] gap-2 p-2 items-center"
+    class="grid @xl:grid-cols-[repeat(3,max-content)] gap-2 @xl:gap-4 items-center"
   >
     <div>
-      <h2 class="text-lg font-semibold">Current Theme</h2>
+      <h2>Current Theme</h2>
       <small class="opacity-60"
         >App wide theme, override <b>auto system theme</b>.</small
       >
@@ -184,7 +184,7 @@
     </div>
 
     <div>
-      <h2 class="text-lg font-semibold">Prefered Dark Theme</h2>
+      <h2>Prefered Dark Theme</h2>
       <small class="opacity-60"
         >App wide theme to be picked when system theme is set to <b>dark</b
         ></small
@@ -214,7 +214,7 @@
     </button>
 
     <div>
-      <h2 class="text-lg font-semibold">Prefered Light Theme</h2>
+      <h2>Prefered Light Theme</h2>
       <small class="opacity-60"
         >App wide theme to be picked when system theme is set to <b>light</b
         ></small
@@ -246,7 +246,7 @@
 
   <div class="divider" />
 
-  <div class="flex flex-wrap gap-2" role="list">
+  <div class="flex flex-wrap gap-4" role="list">
     {#each daisyThemes as theme}
       <button
         data-theme={theme}
