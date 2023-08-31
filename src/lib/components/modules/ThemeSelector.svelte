@@ -135,7 +135,7 @@
     "grid grid-rows-[repeat(2,auto)] grid-cols-[auto,max-content] grid-flow-col gap-x-4 rounded-box p-4 shadow-xl text-left";
 </script>
 
-<div class="p-4 bg-base-200 @xl:max-w-3xl">
+<div class="p-4 bg-base-200 @xl:max-w-3xl rounded-box shadow-xl">
   <header class="mb-8 text-3xl font-bold">Theme Selector</header>
 
   {#if localStorage["hideTutorial-ThemeSelector"] !== "true"}
