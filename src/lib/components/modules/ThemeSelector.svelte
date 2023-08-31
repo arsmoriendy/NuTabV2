@@ -119,7 +119,7 @@
     "card card-compact inline-flex select-none shadow-xl !outline-accent !outline-offset-0 text-left";
 </script>
 
-<div class="p-4 bg-base-200 @container">
+<div class="p-4 bg-base-200 @container @xl:max-w-3xl">
   <header class="mb-8 text-3xl font-bold">Theme Selector</header>
 
   {#if localStorage["hideTutorial-ThemeSelector"] !== "true"}
@@ -134,7 +134,7 @@
   {/if}
 
   <div
-    class="grid @xl:grid-cols-[repeat(3,max-content)] gap-2 @xl:gap-4 items-center"
+    class="grid @xl:grid-cols-[auto_repeat(2,max-content)] gap-2 @xl:gap-4 items-center"
   >
     <div>
       <h2>Current Theme</h2>

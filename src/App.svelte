@@ -6,6 +6,6 @@
   <title>New Tab</title>
 </svelte:head>
 
-<main>
+<main class="@container">
   <ThemeSelector />
 </main>
