@@ -174,10 +174,10 @@
             {/if}
           </p>
           <div class="flex">
+            <div class="p-1 bg-primary" />
             <div class="p-1 bg-secondary" />
             <div class="p-1 bg-accent" />
             <div class="p-1 bg-neutral" />
-            <div class="p-1 bg-base-100" />
           </div>
         </div>
       </button>
@@ -205,10 +205,10 @@
           {preferedDarkTheme}
         </p>
         <div class="flex">
+          <div class="p-1 bg-primary" />
           <div class="p-1 bg-secondary" />
           <div class="p-1 bg-accent" />
           <div class="p-1 bg-neutral" />
-          <div class="p-1 bg-base-100" />
         </div>
       </div>
     </button>
@@ -235,10 +235,10 @@
           {preferedLightTheme}
         </p>
         <div class="flex">
+          <div class="p-1 bg-primary" />
           <div class="p-1 bg-secondary" />
           <div class="p-1 bg-accent" />
           <div class="p-1 bg-neutral" />
-          <div class="p-1 bg-base-100" />
         </div>
       </div>
     </button>
@@ -259,10 +259,10 @@
         <div class="card-body">
           <p class="font-semibold">{theme}</p>
           <div class="flex">
+            <div class="p-1 bg-primary" />
             <div class="p-1 bg-secondary" />
             <div class="p-1 bg-accent" />
             <div class="p-1 bg-neutral" />
-            <div class="p-1 bg-base-100" />
           </div>
         </div>
       </button>
