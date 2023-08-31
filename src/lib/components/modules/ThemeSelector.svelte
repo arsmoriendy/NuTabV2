@@ -35,8 +35,6 @@
   let preferedDarkTheme = localStorage["preferedDarkTheme"] ?? "dark";
   let preferedLightTheme = localStorage["preferedLightTheme"] ?? "light";
 
-  let clickedTheme: string | null;
-
   $: {
     if (theme === "auto") {
       localStorage.removeItem("theme");
@@ -66,8 +64,24 @@
     );
   };
 
+  let clickedTheme: string | null;
+
   const handleThemeClick = (e: Event) => {
     clickedTheme = (e.currentTarget as Element).getAttribute("data-theme");
+  };
+
+  let currentThemeCategory: Element,
+    preferedDarkThemeCategory: Element,
+    preferedLightThemeCategory: Element;
+
+  const handleThemeFocusOut = (e: FocusEvent) => {
+    if (
+      e.relatedTarget === currentThemeCategory ||
+      e.relatedTarget === preferedDarkThemeCategory ||
+      e.relatedTarget === preferedLightThemeCategory
+    )
+      return;
+    clickedTheme = null;
   };
 
   const handleCurrentThemeDrop = (e: DragEvent) => {
@@ -142,6 +156,7 @@
       on:drop={handleCurrentThemeDrop}
       on:dragover={handleThemeDragOver}
       on:click={handleCurrentThemeClick}
+      bind:this={currentThemeCategory}
     >
       {#if theme !== "auto"}
         <button
@@ -179,6 +194,7 @@
       on:drop={handlePreferedDarkThemeDrop}
       on:dragover={handleThemeDragOver}
       on:click={handlePreferedDarkThemeClick}
+      bind:this={preferedDarkThemeCategory}
     >
       <h2>Prefered Dark Theme</h2>
       <small class="opacity-60"
@@ -202,6 +218,7 @@
       on:drop={handlePreferedLightThemeDrop}
       on:dragover={handleThemeDragOver}
       on:click={handlePreferedLightThemeClick}
+      bind:this={preferedLightThemeCategory}
     >
       <h2>Prefered Light Theme</h2>
       <small class="opacity-60"
@@ -230,6 +247,7 @@
         class="{cardClassList} cursor-grab transition-[outline-width] !outline outline-0 focus:outline-4"
         on:dragstart={handleThemeDrag}
         on:click={handleThemeClick}
+        on:focusout={handleThemeFocusOut}
         aria-grabbed="false"
       >
         <div class="card-body">
