@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ThemeSelector from "./lib/components/modules/ThemeSelector.svelte";
+  import ThemeSelector from "./lib/components/globalSettings/ThemeSelector.svelte";
 </script>
 
 <svelte:head>
