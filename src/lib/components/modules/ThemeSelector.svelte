@@ -117,9 +117,11 @@
 
   const cardClassList =
     "card card-compact inline-flex select-none shadow-xl !outline-accent !outline-offset-0 text-left";
+  const cardCategoryClassList =
+    "grid grid-rows-[repeat(2,auto)] grid-cols-[auto,max-content] grid-flow-col gap-x-4 rounded-box p-4 shadow-xl text-left";
 </script>
 
-<div class="p-4 bg-base-200 @container @xl:max-w-3xl">
+<div class="p-4 bg-base-200 @xl:max-w-3xl">
   <header class="mb-8 text-3xl font-bold">Theme Selector</header>
 
   {#if localStorage["hideTutorial-ThemeSelector"] !== "true"}
@@ -133,19 +135,14 @@
     </div>
   {/if}
 
-  <div
-    class="grid @xl:grid-cols-[auto_repeat(2,max-content)] gap-2 @xl:gap-4 items-center"
-  >
-    <div>
-      <h2>Current Theme</h2>
-      <small class="opacity-60"
-        >App wide theme, override <b>auto system theme</b>.</small
-      >
-    </div>
-
-    <div class="divider divider-horizontal" />
-
-    <div class="indicator group w-full">
+  <div class="flex flex-col gap-4">
+    <button
+      data-theme={theme}
+      class="{cardCategoryClassList} indicator w-auto group"
+      on:drop={handleCurrentThemeDrop}
+      on:dragover={handleThemeDragOver}
+      on:click={handleCurrentThemeClick}
+    >
       {#if theme !== "auto"}
         <button
           class="indicator-item badge badge-error transition-[transform] scale-0 group-hover:scale-100 cursor-pointer"
@@ -154,92 +151,71 @@
           <i class="fa-solid fa-xmark absolute" />
         </button>
       {/if}
-
-      <button
-        data-theme={theme}
-        class="{cardClassList} cursor-default grow !outline-0"
-        on:drop={handleCurrentThemeDrop}
-        on:dragover={handleThemeDragOver}
-        on:click={handleCurrentThemeClick}
+      <h2>Current Theme</h2>
+      <small class="opacity-60"
+        >App wide theme, override <b>auto system theme</b>.</small
       >
-        <div class="card-body">
-          <p class="font-semibold">
-            {#if theme === "auto"}
-              <b>Auto: </b>
-              {window.matchMedia("(prefers-color-scheme: dark)").matches
-                ? preferedDarkTheme
-                : preferedLightTheme}
-            {:else}
-              {theme}
-            {/if}
-          </p>
-          <div class="flex">
-            <div class="p-1 bg-primary" />
-            <div class="p-1 bg-secondary" />
-            <div class="p-1 bg-accent" />
-            <div class="p-1 bg-neutral" />
-          </div>
-        </div>
-      </button>
-    </div>
+      <p class="text-sm font-semibold justify-self-end">
+        {#if theme === "auto"}
+          <b>auto</b>
+          ({window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? preferedDarkTheme
+            : preferedLightTheme})
+        {:else}
+          {theme}
+        {/if}
+      </p>
+      <div class="flex items-start justify-self-end">
+        <span class="p-1 bg-primary" />
+        <span class="p-1 bg-secondary" />
+        <span class="p-1 bg-accent" />
+        <span class="p-1 bg-neutral" />
+      </div>
+    </button>
 
-    <div>
+    <button
+      data-theme={preferedDarkTheme}
+      class={cardCategoryClassList}
+      on:drop={handlePreferedDarkThemeDrop}
+      on:dragover={handleThemeDragOver}
+      on:click={handlePreferedDarkThemeClick}
+    >
       <h2>Prefered Dark Theme</h2>
       <small class="opacity-60"
         >App wide theme to be picked when system theme is set to <b>dark</b
         ></small
       >
-    </div>
-
-    <div class="divider divider-horizontal" />
-
-    <button
-      data-theme={preferedDarkTheme}
-      class="{cardClassList} cursor-default !outline-0"
-      on:drop={handlePreferedDarkThemeDrop}
-      on:dragover={handleThemeDragOver}
-      on:click={handlePreferedDarkThemeClick}
-    >
-      <div class="card-body">
-        <p class="font-semibold">
-          {preferedDarkTheme}
-        </p>
-        <div class="flex">
-          <div class="p-1 bg-primary" />
-          <div class="p-1 bg-secondary" />
-          <div class="p-1 bg-accent" />
-          <div class="p-1 bg-neutral" />
-        </div>
+      <p class="text-sm font-semibold justify-self-end">
+        {preferedDarkTheme}
+      </p>
+      <div class="flex items-start justify-self-end">
+        <span class="p-1 bg-primary" />
+        <span class="p-1 bg-secondary" />
+        <span class="p-1 bg-accent" />
+        <span class="p-1 bg-neutral" />
       </div>
     </button>
 
-    <div>
+    <button
+      data-theme={preferedLightTheme}
+      class={cardCategoryClassList}
+      on:drop={handlePreferedLightThemeDrop}
+      on:dragover={handleThemeDragOver}
+      on:click={handlePreferedLightThemeClick}
+    >
       <h2>Prefered Light Theme</h2>
       <small class="opacity-60"
         >App wide theme to be picked when system theme is set to <b>light</b
         ></small
       >
-    </div>
-
-    <div class="divider divider-horizontal" />
-
-    <button
-      data-theme={preferedLightTheme}
-      class="{cardClassList} cursor-default !outline-0"
-      on:drop={handlePreferedLightThemeDrop}
-      on:dragover={handleThemeDragOver}
-      on:click={handlePreferedLightThemeClick}
-    >
-      <div class="card-body">
-        <p class="font-semibold">
-          {preferedLightTheme}
-        </p>
-        <div class="flex">
-          <div class="p-1 bg-primary" />
-          <div class="p-1 bg-secondary" />
-          <div class="p-1 bg-accent" />
-          <div class="p-1 bg-neutral" />
-        </div>
+      <p class="text-sm font-semibold justify-self-end">
+        {preferedLightTheme}
+      </p>
+      <div class="flex items-start justify-self-end">
+        <span class="p-1 bg-primary" />
+        <span class="p-1 bg-secondary" />
+        <span class="p-1 bg-accent" />
+        <span class="p-1 bg-neutral" />
       </div>
     </button>
   </div>
