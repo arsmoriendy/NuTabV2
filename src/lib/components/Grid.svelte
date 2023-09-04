@@ -8,13 +8,16 @@
 </script>
 
 <script lang="ts">
-  import BaseModule from "./modules/BaseModule.svelte";
+  import ModuleContainer from "./ModuleContainer.svelte";
+  import TwitchFollowListModule from "./modules/TwitchFollowListModule.svelte";
 
   let gridEl: Element;
   let cols: number = 4;
   let rows: number = 3;
 
-  const modulesStringMap = new Map([["BaseModule", BaseModule]]);
+  const modulesStringMap = new Map([
+    ["TwitchFollowListModule", TwitchFollowListModule],
+  ]);
 
   type module = {
     name: string;
@@ -25,7 +28,7 @@
     : // default modules
       [
         {
-          name: "BaseModule",
+          name: "TwitchFollowListModule",
           layout: { rowStart: 2, colStart: 2, rowEnd: 3, colEnd: 4 },
         },
       ];
@@ -85,8 +88,7 @@
   bind:this={gridEl}
 >
   {#each modules as module, i}
-    <svelte:component
-      this={modulesStringMap.get(module.name)}
+    <ModuleContainer
       class={resizedModuleIndex === i ? "" : "pointer-events-auto opacity-60"}
       layout={module.layout}
       handleRowStartMouseDown={() => {
@@ -101,6 +103,8 @@
       handleColEndMouseDown={() => {
         handleColEndMouseDown(i);
       }}
-    />
+    >
+      <svelte:component this={modulesStringMap.get(module.name)} />
+    </ModuleContainer>
   {/each}
 </div>

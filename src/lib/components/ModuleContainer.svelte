@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { MouseEventHandler } from "svelte/elements";
-  import type { ModuleLayoutType } from "../Grid.svelte";
+  import type { ModuleLayoutType } from "./Grid.svelte";
 
   export let layout: ModuleLayoutType,
     handleRowStartMouseDown: MouseEventHandler<HTMLElement>,
