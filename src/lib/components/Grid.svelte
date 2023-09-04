@@ -33,7 +33,7 @@
         },
       ];
 
-  let resizedModuleIndex: number;
+  let resizedModuleIndex: number | null = null;
 
   const handleRowStartMouseDown = (i: number) => {
     resizedModuleIndex = i;
@@ -43,6 +43,7 @@
         1;
       modules[i].layout.rowStart = row;
       gridEl.removeEventListener("mouseup", handleRowStartMouseUp);
+      resizedModuleIndex = null;
     };
     gridEl.addEventListener("mouseup", handleRowStartMouseUp);
   };
@@ -54,6 +55,7 @@
         Math.trunc(((e as MouseEvent).clientX / gridEl.clientWidth) * cols) + 1;
       modules[i].layout.colStart = col;
       gridEl.removeEventListener("mouseup", handleColStartMouseUp);
+      resizedModuleIndex = null;
     };
     gridEl.addEventListener("mouseup", handleColStartMouseUp);
   };
@@ -66,6 +68,7 @@
         2;
       modules[i].layout.rowEnd = row;
       gridEl.removeEventListener("mouseup", handleRowEndMouseUp);
+      resizedModuleIndex = null;
     };
     gridEl.addEventListener("mouseup", handleRowEndMouseUp);
   };
@@ -77,6 +80,7 @@
         Math.trunc(((e as MouseEvent).clientX / gridEl.clientWidth) * cols) + 2;
       modules[i].layout.colEnd = col;
       gridEl.removeEventListener("mouseup", handleColEndMouseUp);
+      resizedModuleIndex = null;
     };
     gridEl.addEventListener("mouseup", handleColEndMouseUp);
   };
@@ -89,7 +93,7 @@
 >
   {#each modules as module, i}
     <ModuleContainer
-      class={resizedModuleIndex === i ? "" : "pointer-events-auto opacity-60"}
+      class={resizedModuleIndex === i ? "pointer-events-auto opacity-60" : ""}
       layout={module.layout}
       handleRowStartMouseDown={() => {
         handleRowStartMouseDown(i);
