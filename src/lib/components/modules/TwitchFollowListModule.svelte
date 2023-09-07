@@ -1,7 +1,6 @@
 <script lang="ts">
   let accessToken: undefined | string = localStorage["twitchAccessToken"];
   let userId: undefined | string = localStorage["twitchUserId"];
-  let followList: any[] = [];
 
   const redirectUri = import.meta.env["DEV"]
     ? import.meta.env["VITE_TWITCH_REDIRECT_URI"]
@@ -24,14 +23,40 @@
     }
   })();
 
+  let delay: number = localStorage["twitchRefreshFollowListDelay"]
+    ? JSON.parse(localStorage["twitchRefreshFollowListDelay"])
+    : 5000; // default delay
+
+  $: {
+    localStorage["twitchRefreshFollowListDelay"] = delay
+  }
+
   // periodically refresh follow list
-  const delay = 5000;
+  let followList: any[] = [];
   (async function refreshFollowList() {
     if (accessToken !== undefined && userId !== undefined) {
       followList = await getFollowList(accessToken, userId);
     }
     setTimeout(refreshFollowList, delay);
   })();
+
+  // toggle settings
+  let settingsShown: boolean = false;
+  function showSettings() {
+    settingsShown = true;
+  }
+  function hideSettings() {
+    settingsShown = false;
+  }
+
+  function resetSettings() {
+    delay = 5000;
+    accessToken = undefined;
+    userId = undefined;
+    localStorage.removeItem("twitchRefreshFollowListDelay");
+    localStorage.removeItem("twitchAccessToken");
+    localStorage.removeItem("twitchUserId");
+  }
 
   function giveAuthorization(redirectUri: string) {
     const state = String.fromCharCode(
@@ -91,13 +116,67 @@
   }
 </script>
 
-{#if accessToken === undefined}
-  <button
-    class="btn btn-primary"
-    on:click={() => giveAuthorization(redirectUri)}>Authenticate</button
+<div class="relative w-full h-full overflow-hidden">
+  <!-- settings -->
+  <div
+    class="flex flex-col gap-4 w-full h-full absolute top-0 transition-[right] {settingsShown
+      ? 'right-0'
+      : 'right-[-100%]'}"
   >
-{:else}
-  {#each followList as i}
-    <p>{i["user_name"]}</p>
-  {/each}
-{/if}
+    <div class="flex gap-4">
+      <button on:click={hideSettings}
+        ><i class="fa-solid fa-chevron-left" /></button
+      >
+      <p class="font-bold">Settings</p>
+    </div>
+    <div class="grid grid-cols-[auto,max-content] gap-4 items-center">
+      <div>
+        Refresh Delay <span class="badge badge-sm badge-neutral ml-1"
+          >milliseconds</span
+        >
+      </div>
+      <input
+        type="number"
+        bind:value={delay}
+        step="1000"
+        min="0"
+        max="60000"
+        class="input input-xs text-right"
+      />
+      <input
+        type="range"
+        bind:value={delay}
+        step="1000"
+        min="0"
+        max="60000"
+        class="range range-xs col-span-2"
+      />
+
+      <div>Reset</div>
+      <button class="btn btn-xs btn-error" on:click={resetSettings}>Reset</button>
+    </div>
+  </div>
+
+  <!-- contents -->
+  <div
+    class="flex flex-col gap-4 w-full h-full absolute top-0 transition-[left] {settingsShown
+      ? 'left-[-100%]'
+      : 'left-0'}"
+  >
+    <div class="flex justify-between">
+      <p class="font-bold">Followed Channels</p>
+      <button on:click={showSettings}><i class="fa-solid fa-gear" /></button>
+    </div>
+
+    {#if accessToken !== undefined && userId !== undefined}
+      {#each followList as i}
+        <p>{i["user_name"]}</p>
+      {/each}
+    {:else}
+      <button
+        class="btn btn-primary"
+        on:click={() => giveAuthorization(redirectUri)}>Authenticate</button
+      >
+    {/if}
+  </div>
+</div>
