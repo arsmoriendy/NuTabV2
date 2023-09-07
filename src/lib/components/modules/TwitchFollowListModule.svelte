@@ -1,12 +1,13 @@
 <script lang="ts">
   let accessToken: undefined | string = localStorage["twitchAccessToken"];
+  let userId: undefined | string = localStorage["twitchUserId"];
   let followList: any[] = [];
 
   const redirectUri = import.meta.env["DEV"]
     ? import.meta.env["VITE_TWITCH_REDIRECT_URI"]
     : "https://api.arsmoriendy.com/NuTabV2";
 
-  // check state, get access token
+  // check state, get access token, get user id, save to localStorage
   (async () => {
     if (localStorage["twitchState"] !== undefined) {
       const tokenResponse = await fetch(
@@ -15,9 +16,21 @@
 
       if (tokenResponse.status === 200) {
         accessToken = (await tokenResponse.json())["accessToken"];
+        userId = await getUserId(accessToken!);
+        localStorage["twitchAccessToken"] = accessToken;
+        localStorage["twitchUserId"] = userId;
       }
       localStorage.removeItem("twitchState");
     }
+  })();
+
+  // periodically refresh follow list
+  const delay = 5000;
+  (async function refreshFollowList() {
+    if (accessToken !== undefined && userId !== undefined) {
+      followList = await getFollowList(accessToken, userId);
+    }
+    setTimeout(refreshFollowList, delay);
   })();
 
   function giveAuthorization(redirectUri: string) {
@@ -75,18 +88,6 @@
     });
     const responseJSON = await response.json();
     return responseJSON["data"][0]["id"];
-  }
-
-  $: {
-    (async () => {
-      if (accessToken !== undefined) {
-        localStorage["twitchAccessToken"] = accessToken;
-        followList = await getFollowList(
-          accessToken,
-          await getUserId(accessToken)
-        );
-      }
-    })();
   }
 </script>
 
