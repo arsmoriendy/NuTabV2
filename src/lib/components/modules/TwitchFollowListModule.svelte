@@ -113,6 +113,11 @@
     }
   }
 
+  /**
+   * Returns userId belonging to accessToken's user
+   * @param {string} accessToken
+   * @returns {Promise<string>} - userId
+   */
   async function getUserId(accessToken: string): Promise<string> {
     const response = await fetch("https://api.twitch.tv/helix/users", {
       headers: {
