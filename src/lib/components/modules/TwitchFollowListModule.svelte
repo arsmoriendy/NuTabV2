@@ -9,19 +9,29 @@
   // check state, get access token, get user id, save to localStorage
   (async () => {
     if (localStorage["twitchState"] !== undefined) {
-      const tokenResponse = await fetch(
-        `${redirectUri}/token?state=` + localStorage["twitchState"]
-      );
+      const tokens = await getTokens(localStorage["twitchState"]);
 
-      if (tokenResponse.status === 200) {
-        accessToken = (await tokenResponse.json())["accessToken"];
-        userId = await getUserId(accessToken!);
-        localStorage["twitchAccessToken"] = accessToken;
-        localStorage["twitchUserId"] = userId;
-      }
+      accessToken = tokens.accessToken;
+      userId = await getUserId(accessToken!);
+
+      localStorage["twitchAccessToken"] = accessToken;
+      localStorage["twitchUserId"] = userId;
+
       localStorage.removeItem("twitchState");
     }
   })();
+
+  /**
+   * Returns an object that contains accesToken and refreshToken
+   * @param {string} state - used as a unique index key for token values
+   * @returns {Promise<{accessToken: string, refreshToken: string}>}
+   */
+  async function getTokens(
+    state: string
+  ): Promise<{ accessToken: string; refreshToken: string }> {
+    const response = await fetch(`${redirectUri}/token?state=` + state);
+    return await response.json();
+  }
 
   let delay: number = localStorage["twitchRefreshFollowListDelay"]
     ? JSON.parse(localStorage["twitchRefreshFollowListDelay"])
