@@ -77,7 +77,6 @@
     after: string | undefined = undefined
   ): Promise<any[]> {
     const followURL = new URL("https://api.twitch.tv/helix/streams/followed");
-    followURL.searchParams.append("first", "10");
     followURL.searchParams.append("user_id", userId);
     if (after !== undefined) followURL.searchParams.append("after", after);
 
