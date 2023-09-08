@@ -1,5 +1,6 @@
 <script lang="ts">
   let accessToken: undefined | string = localStorage["twitchAccessToken"];
+  let refreshToken: undefined | string = localStorage["twitchRefreshToken"];
   let userId: undefined | string = localStorage["twitchUserId"];
 
   const redirectUri = import.meta.env["DEV"]
@@ -12,34 +13,22 @@
       const tokens = await getTokens(localStorage["twitchState"]);
 
       accessToken = tokens.accessToken;
+      refreshToken = tokens.refreshToken;
       userId = await getUserId(accessToken!);
 
       localStorage["twitchAccessToken"] = accessToken;
+      localStorage["twitchRefreshToken"] = refreshToken;
       localStorage["twitchUserId"] = userId;
 
       localStorage.removeItem("twitchState");
     }
   })();
 
-  /**
-   * Returns an object that contains accesToken and refreshToken
-   * @param {string} state - used as a unique index key for token values
-   * @returns {Promise<{accessToken: string, refreshToken: string}>}
-   */
-  async function getTokens(
-    state: string
-  ): Promise<{ accessToken: string; refreshToken: string }> {
-    const response = await fetch(`${redirectUri}/token?state=` + state);
-    return await response.json();
-  }
-
   let delay: number = localStorage["twitchRefreshFollowListDelay"]
     ? JSON.parse(localStorage["twitchRefreshFollowListDelay"])
     : 5000; // default delay
 
-  $: {
-    localStorage["twitchRefreshFollowListDelay"] = delay;
-  }
+  $: localStorage["twitchRefreshFollowListDelay"] = delay;
 
   // periodically refresh follow list
   let followList: any[] = [];
@@ -66,6 +55,32 @@
     localStorage.removeItem("twitchRefreshFollowListDelay");
     localStorage.removeItem("twitchAccessToken");
     localStorage.removeItem("twitchUserId");
+  }
+
+  /**
+   * Returns an object that contains accesToken and refreshToken
+   * @param {string} state - used as a unique index key for token values
+   * @returns {Promise<{accessToken: string, refreshToken: string}>}
+   */
+  async function getTokens(
+    state: string
+  ): Promise<{ accessToken: string; refreshToken: string }> {
+    const response = await fetch(`${redirectUri}/token?state=` + state);
+    return await response.json();
+  }
+
+  /**
+   * Returns new access and refresh tokens from a from a refresh token
+   * @param {string} refreshToken
+   * @returns {Promise<{accessToken: string, refreshToken: string}>}
+   */
+  async function getRefreshedTokens(
+    refreshToken: string
+  ): Promise<{ accessToken: string; refreshToken: string }> {
+    const response = await fetch(
+      `${redirectUri}/refresh?refreshToken=` + refreshToken
+    );
+    return await response.json();
   }
 
   function giveAuthorization(redirectUri: string) {
