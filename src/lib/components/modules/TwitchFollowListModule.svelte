@@ -28,7 +28,7 @@
     : 5000; // default delay
 
   $: {
-    localStorage["twitchRefreshFollowListDelay"] = delay
+    localStorage["twitchRefreshFollowListDelay"] = delay;
   }
 
   // periodically refresh follow list
@@ -152,7 +152,9 @@
       />
 
       <div>Reset</div>
-      <button class="btn btn-xs btn-error" on:click={resetSettings}>Reset</button>
+      <button class="btn btn-xs btn-error" on:click={resetSettings}
+        >Reset</button
+      >
     </div>
   </div>
 
@@ -168,9 +170,11 @@
     </div>
 
     {#if accessToken !== undefined && userId !== undefined}
-      {#each followList as i}
-        <p>{i["user_name"]}</p>
-      {/each}
+      <div class="overflow-y-auto">
+        {#each followList as i}
+          <p>{i["user_name"]}</p>
+        {/each}
+      </div>
     {:else}
       <button
         class="btn btn-primary"
